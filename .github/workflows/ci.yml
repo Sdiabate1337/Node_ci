@@ -1,0 +1,32 @@
+
+name: node.js CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      use: actions/checkout@v3
+
+    - name: setup node
+      use: actions/node-setup@v3
+      with:
+        node-version: 18.19.1
+        cache: npm
+      
+    - name: run dependencies
+      run: npm ci
+    
+    - name: run test
+      run: npm test
+    
+    - name: lint code
+      run: npm run lint
