@@ -1,5 +1,4 @@
-
-name: node.js CI
+name: Node.js CI
 
 on:
   push:
@@ -9,42 +8,41 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: setup node
-      uses: actions/node-setup@v3
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
       with:
-        node-version: 18.19.1
-        cache: npm
-      
-    - name: run dependencies
+        node-version: '18.19.1'
+        cache: 'npm'
+
+    - name: Install dependencies
       run: npm ci
-    
-    - name: run test
+
+    - name: Run tests
       run: npm test
-    
+
     - name: Generate coverage report
       run: npm run test -- --coverage
 
-    - name: upload coverage to Codecov
+    - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
 
     - name: Create GitHub Issue on failure
-     if: failure()
-     uses: actions/github-script@v6
-     with:
-      script: |
-        const { data: issue } = await github.rest.issues.create({
-          owner: context.repo.owner,
-          repo: context.repo.repo,
-          title: `CI Pipeline Failed: ${context.job}`,
-          body: `🚨 CI pipeline failed for ${context.repo.owner}/${context.repo.repo}. Please check the details [here](${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}).`
-        });
-        console.log(`Created issue: ${issue.html_url}`);
+      if: failure()
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const { data: issue } = await github.rest.issues.create({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            title: `CI Pipeline Failed: ${context.job}`,
+            body: `🚨 CI pipeline failed for ${context.repo.owner}/${context.repo.repo}. Please check the details [here](${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}).`
+          });
+          console.log(`Created issue: ${issue.html_url}`);
