@@ -36,7 +36,7 @@ jobs:
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
 
-   - name: Create GitHub Issue on failure
+    - name: Create GitHub Issue on failure
      if: failure()
      uses: actions/github-script@v6
      with:
