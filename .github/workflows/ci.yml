@@ -14,10 +14,10 @@ jobs:
 
     steps:
     - name: Checkout code
-      use: actions/checkout@v3
+      uses: actions/checkout@v3
 
     - name: setup node
-      use: actions/node-setup@v3
+      uses: actions/node-setup@v3
       with:
         node-version: 18.19.1
         cache: npm
@@ -37,9 +37,9 @@ jobs:
         token: ${{ secrets.CODECOV_TOKEN }}
 
    - name: Create GitHub Issue on failure
-    if: failure()
-    uses: actions/github-script@v6
-    with:
+     if: failure()
+     uses: actions/github-script@v6
+     with:
       script: |
         const { data: issue } = await github.rest.issues.create({
           owner: context.repo.owner,
