@@ -14,12 +14,12 @@ jobs:
 
     steps:
     - name: Checkout code
-      use: actions/checkout@v3
+      uses: actions/checkout@v3
 
     - name: setup node
-      use: actions/node-setup@v3
+      uses: actions/setup-node@v3
       with:
-        node-version: 18.19.1
+        node-version: '18.19.1'
         cache: npm
       
     - name: run dependencies
@@ -28,6 +28,7 @@ jobs:
     - name: run test
       run: npm test
     
+<<<<<<< HEAD
     - name: Generate coverage report
       run: npm run test -- --coverage
 
@@ -48,3 +49,5 @@ jobs:
           body: `🚨 CI pipeline failed for ${context.repo.owner}/${context.repo.repo}. Please check the details [here](${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}).`
         });
         console.log(`Created issue: ${issue.html_url}`);
+=======
+>>>>>>> 9100bfcc8694b4c19268b603e9e66fd823c13863
