@@ -14,10 +14,10 @@ jobs:
 
     steps:
     - name: Checkout code
-      use: actions/checkout@v3
+      uses: actions/checkout@v3
 
     - name: setup node
-      use: actions/node-setup@v3
+      uses: actions/node-setup@v3
       with:
         node-version: 18.19.1
         cache: npm
