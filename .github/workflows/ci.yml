@@ -36,7 +36,7 @@ jobs:
 
     # setup SAST with CodeQl
     - name: setup CodeQl
-      ses: github/codeql-action/init@v3
+      uses: github/codeql-action/init@v3
       with:
         languages: javascript
     
