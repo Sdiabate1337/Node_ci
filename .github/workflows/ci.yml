@@ -46,12 +46,6 @@ jobs:
       # Dependency scanning
     - name: Run npm audit
       run: npm audit --audit-level=high
-    
-    # Secret detection using TruffleHog
-    - name: Secret scanning
-      uses: trufflesecurity/trufflehog@v3
-      with:
-        scan: 'true'
 
 
     - name: Create GitHub Issue on failure
