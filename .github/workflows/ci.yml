@@ -34,6 +34,26 @@ jobs:
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
 
+    # setup SAST with CodeQl
+    - name: setup CodeQl
+      ses: github/codeql-action/init@v3
+      with:
+        languages: javascript
+    
+    - name: perform code analysis
+      uses: github/codeql-action/analyze@v3
+
+      # Dependency scanning
+    - name: Run npm audit
+      run: npm audit --audit-level=high
+    
+    # Secret detection using TruffleHog
+    - name: Secret scanning
+      uses: trufflesecurity/trufflehog@v3
+      with:
+        scan: 'true'
+
+
     - name: Create GitHub Issue on failure
       if: failure()
       uses: actions/github-script@v6
